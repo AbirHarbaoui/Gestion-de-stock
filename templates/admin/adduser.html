@@ -1,0 +1,67 @@
+{% extends('layouts/navbaradmin.html')%}
+{% block content %}
+ <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Utilisateur</h1>
+        <h1 class="h3 mb-0 text-gray-800">Admin</h1>
+     <hr>
+    </div>
+   <div class="container">
+     <div class="row justify-content-center">
+         <div class="col-md-8">
+             {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                 {% if messages %}
+                     <div class="alert alert-danger">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+             {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                 {% if messages %}
+                     <div class="alert alert-success">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+            <form action="adduser" method="post">
+                <div class="form-group">
+                <label>Email</label>
+                <input type="text" name="email" class="form-control" required>
+            </div>
+                <div class="form-group">
+                <label>Nom</label>
+               <input type="text" name="first_name" class="form-control" required>
+            </div>
+                <div class="form-group">
+                 <label >Prenom</label>
+                 <input type="text" name="last_name" class="form-control" required>
+            </div>
+                <div class="row">
+                <div class="form-group col ">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <div class="form-group col ">
+                    <label>Confirm password</label>
+                    <input type="password" name="cpassword" class="form-control" required>
+                </div>
+            </div>
+                <div class="form-group">
+                <label >Numero de telephone</label>
+                <input type="tel" name="phone" id="phone" class="form-control input-sm" >
+            </div>
+                <div class="row mb-0">
+                    <div class="col-md-6 offset-md-4">
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <button type="reset" class="btn btn-danger">Annuler</button>
+                    </div>
+                </div>
+            </form>
+         </div>
+     </div>
+   </div>
+{% endblock %}

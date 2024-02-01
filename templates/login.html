@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+</head>
+<body>
+<div class="limiter" id="login">
+    <div class="container-login100" style="background-image:url('static/img/isi.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-5 col-md-offset-1">
+                    <div class="login_topimg"> </div>
+                    <div class="wrap-login100">
+                    {% if session['logged_in']==True %}
+                        <span class="login100-form-title "> you are </span>
+                        <span class="login100-form-subtitle m-b-16"> logged </span>
+                       
+                            <a href="{{ url_for('dashad') }}">Dashboard</a>
+                       
+
+                    {% else %}
+                      <form action="{{ url_for('login') }}" method="post" class="login100-form validate-form">
+                            <span class="login100-form-title "> Connectez-vous </span>
+                            <span class="login100-form-subtitle m-b-16"> A votre compte </span>
+                            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                                  {% if messages %}
+                                    <div class="alert alert-danger">
+                                    {% for message in messages %}
+                                      <p>{{ message }}</p>
+                                    {% endfor %}
+                                    </div>
+                                  {% endif %}
+                                {% endwith %}
+                       {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                                  {% if messages %}
+                                    <div class="alert alert-succes">
+                                    {% for message in messages %}
+                                      <p>{{ message }}</p>
+                                    {% endfor %}
+                                    </div>
+                                  {% endif %}
+                                {% endwith %}
+                            <div class="wrap-input100 validate-input m-b-16" data-validate="Valid email is required: ex@abc.xyz">
+                                <input class="input100" required type="text" name="email" placeholder="Email"> <span class="focus-input100"></span> <span class="symbol-input100"> <span class="glyphicon glyphicon-user"></span> </span> </div>
+                            <div class="wrap-input100 validate-input m-b-16" data-validate="Mot de passe est requis">
+                                <input class="input100" required type="password" name="pass" placeholder="Mot de passe"> <span class="focus-input100"></span> <span class="symbol-input100"> <span class="glyphicon glyphicon-lock"></span> </span> </div>
+                            <div class="flex-sb-m w-full p-b-30">
+                                <div class="contact100-form-checkbox"> <input class="input-checkbox100" id="ckb1" type="checkbox" name="souviens-moi"> <label class="label-checkbox100" for="ckb1"> Remember me </label> </div>
+                                <div> <a href="#" class="txt1"> Mot de passe oublié?</a> </div>
+                            </div>
+                            <div class="container-login100-form-btn p-t-25"> <button type="submit" class="login100-form-btn"> Connectez-vous </button> </div>
+                        </form>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

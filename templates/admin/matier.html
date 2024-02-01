@@ -1,0 +1,131 @@
+{% extends('layouts/navbaradmin.html')%}
+{% block content %}
+ <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Matière</h1>
+        <h1 class="h3 mb-0 text-gray-800">Admin</h1>
+    </div>
+         <div class="col-md-8">
+             {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                 {% if messages %}
+                     <div class="alert alert-danger">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+             {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                 {% if messages %}
+                     <div class="alert alert-success">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+         </div>
+    <div class="row justify-content-left">
+       <div class="col-md-12">
+           <br />
+           <div class="card">
+               <div class="card-header bgsize-primary-4 white card-header">
+                   <h4 class="card-title">Tableau des matières</h4>
+               </div>
+               <div class="card-body">
+                   <div class="pull-right">
+                        <button href="" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary"><i class="bi bi-add"></i>Ajouter une nouvelle matière</button>
+
+                   </div>
+                   <div class=" card-content table-responsive">
+         <table class="table table-hover">
+             <tr class="table-primary">
+                 <th>#</th>
+                 <th>Class</th>
+                 <th>Matiere</th>
+                 <th>Action</th>
+             </tr>
+             {% for ma in matiers %}
+                 <tr>
+                     <td>{{ ma.0 }}</td>
+                     <td>{{ ma.3 }}</td>
+                      <td>{{ ma.2 }}</td>
+                     <td>
+                        <a href="" data-toggle="modal" data-target="#exampleModal{{ ma.0 }}" class="btn btn-warning"><i class="bi bi-pencil"></i>Modifier</a>
+
+                        <form method="post" action="deletema/{{ ma.0 }}">
+                             <Button type="submit" onclick="return confirm('etes-vous sur de supprimer')" class="btn btn-danger"><i class="bi bi-trash3"></i>Supprimer</Button>
+                        </form>
+                     </td>
+                 </tr>
+                 <!-- Modal -->
+<div class="modal fade" id="exampleModal{{ ma.0 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier les matiéres</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+         <form action="updatema/{{ ma.0 }}" method="post">
+      <div class="modal-body">
+          <div class="form-group">
+              <label>Nom du matiére</label>
+              <input type="text" name="name" value="{{ ma.2 }}" class="form-control" required>
+          </div>
+          <div class="form-group">
+              <label> Nom du classe</label>
+              <select name="class" class="form-control" required>
+                  {% for cl in classs %}
+                      <option value="{{ cl.0 }}">{{ cl.1 }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer </button>
+        <button type="submit" class="btn btn-primary">Sauvegarder les modifications </button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+             {% endfor %}
+         </table>
+         </div>
+     </div>
+   </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter matiére</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+         <form action="addma" method="post">
+      <div class="modal-body">
+          <div class="form-group">
+              <label>Nom du matiére</label>
+              <input type="text" name="name"  class="form-control" required>
+          </div>
+          <div class="form-group">
+              <label> Nom du classe</label>
+              <select name="class" class="form-control" required>
+                  {% for cl in classs %}
+                      <option value="{{ cl.0 }}">{{ cl.1 }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-primary">Sauvegarder les modifications </button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends('layouts/nav.html')%}
+{% block content %}
+ <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Product</h1>
+    </div>
+         <div class="col-md-8">
+             {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                 {% if messages %}
+                     <div class="alert alert-danger">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+             {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                 {% if messages %}
+                     <div class="alert alert-success">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+         </div>
+    <div class="row justify-content-left">
+       <div class="col-md-12">
+           <br />
+           <div class="card">
+               <div class="card-header bgsize-primary-4 white card-header">
+                   <h4 class="card-title">Product list</h4>
+               </div>
+               <div class="card-body">
+                   <div class="pull-right">
+                        <button href="" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary"><i class="bi bi-add"></i>Add Product</button>
+
+                   </div>
+                   <div class=" card-content table-responsive">
+         <table class="table table-hover">
+             <tr class="table-primary">
+                 <th>#</th>
+                 <th>Name</th>
+                 <th>Descreption</th>
+                 <th>Quantity</th>
+                 <th>Price</th>
+                 <th colspan="2">Action</th>
+             </tr>
+             {% for prdt in prdts %}
+                 <tr>
+                     <td>{{ prdt.0 }}</td>
+                     <td>{{ prdt.1 }}</td>
+                     <td>{{ prdt.2 }}</td>
+                     <td>{{ prdt.3 }}</td>
+                     <td>{{ prdt.4 }}</td>
+
+                     <td>
+                        <a href="" data-toggle="modal" data-target="#exampleModal{{ prdt.0 }}" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
+                      </td>
+                      <td>
+                        <form method="post" action="deleteprod/{{ prdt.0 }}">
+                             <Button type="submit" onclick="return confirm('are you sure for delete')" class="btn btn-danger"><i class="bi bi-trash3"></i></Button>
+                        </form>
+                     </td>
+                 </tr>
+                 <!-- Modal -->
+<div class="modal fade" id="exampleModal{{ prdt.0 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+         <form action="updateprod/{{ prdt.0 }}" method="post">
+      <div class="modal-body">
+          <div class="form-group">
+              <label>name</label>
+              <input type="text" name="name" value="{{ prdt.1 }}" class="form-control" required>
+          </div>
+
+        <div class="form-group">
+          <label>Quantity</label>
+          <input type="text" name="quant" value="{{ prdt.3 }}" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <input type="text" name="prix" value="{{ prdt.4 }}" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label>Descreption</label>
+      <textarea name="desc" class="form-control" required>{{ prdt.2 }}</textarea>
+  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+             {% endfor %}
+         </table>
+         </div>
+     </div>
+   </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+         <form action="addprod" method="post">
+            <div class="modal-body">
+              <div class="form-group">
+                <label>name</label>
+                <input type="text" name="name"  class="form-control" required>
+            </div>
+
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="text" name="quant"  class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Price</label>
+          <input type="text" name="prix"  class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label>Descreption</label>
+        <textarea name="desc" class="form-control" required></textarea>
+      </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

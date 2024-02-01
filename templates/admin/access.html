@@ -1,0 +1,93 @@
+{% extends('layouts/navbaradmin.html')%}
+{% block content %}
+ <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Accéder à l'utilisateur</h1>
+        <h1 class="h3 mb-0 text-gray-800">Admin</h1>
+    </div>
+
+         <div class="col-md-8">
+             {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                 {% if messages %}
+                     <div class="alert alert-danger">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+             {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                 {% if messages %}
+                     <div class="alert alert-success">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+         </div>
+    <div class="row justify-content-left">
+       <div class="col-md-12">
+           <br />
+           <div class="card">
+               <div class="card-header bgsize-primary-4 white card-header">
+                   <h4 class="card-title">Accéder à la table des utilisateurs </h4>
+               </div>
+               <div class="card-body">
+                   <div class="pull-right">
+
+                   </div>
+                   <div class=" card-content table-responsive">
+             <table class="table table-hover">
+                <tr class="table-primary">
+                     <th>#</th>
+                     <th>Nom</th>
+                     <th>Prenom</th>
+                     <th>Email</th>
+                     <th>Role</th>
+                     <th>Action</th>
+                 </tr>
+                 {% for us in users %}
+                     <tr>
+                     <td>{{ us.0 }}</td>
+                     <td>{{ us.1 }}</td>
+                     <td>{{ us.2 }}</td>
+                     <td>{{ us.3 }}</td>
+                     <td>{{ us.5}}</td>
+                     <td><!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#role{{ us.0 }}">
+                      update role
+                    </button></td>
+                     </tr>
+                     <!-- Modal -->
+                    <div class="modal fade" id="role{{ us.0 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Accéder à la mise à jour </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form action="accessrole/{{ us.0 }}" method="post">
+      <div class="modal-body">
+        <select class="form-control" name="role">
+            <option>etudiant</option>
+            <option>agent</option>
+            <option>admin</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-primary">Souvegarder les modifications </button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+                 {% endfor %}
+             </table>
+         </div>
+     </div>
+
+{% endblock %}

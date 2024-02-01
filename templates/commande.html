@@ -1,0 +1,134 @@
+{% extends('layouts/nav.html')%}
+{% block content %}
+ <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Order</h1>
+    </div>
+         <div class="col-md-8">
+             {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                 {% if messages %}
+                     <div class="alert alert-danger">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+             {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                 {% if messages %}
+                     <div class="alert alert-success">
+                         {% for message in messages %}
+                             <p>{{ message }}</p>
+                         {% endfor %}
+                     </div>
+                 {% endif %}
+             {% endwith %}
+         </div>
+    <div class="row justify-content-left">
+       <div class="col-md-12">
+           <br />
+           <div class="card">
+               <div class="card-header bgsize-primary-4 white card-header">
+                   <h4 class="card-title">Order list</h4>
+               </div>
+               <div class="card-body">
+                   <div class="pull-right">
+                        <button href="" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary"><i class="bi bi-add"></i>Add Order</button>
+
+                   </div>
+                   <div class=" card-content table-responsive">
+         <table class="table table-hover">
+             <tr class="table-primary">
+           
+                 <th>Code order</th>
+                 <th>Code Product</th>
+                 <th>Quantity</th>
+               
+                 <th colspan="3">Action</th>
+             </tr>
+             {% for cmd in cmds %}
+                 <tr>
+                     <td>{{ cmd.0 }}</td>
+                     <td>{{ cmd.1 }}</td>
+                     <td>{{ cmd.2 }}</td>
+
+
+                     <td>
+                        <a href="" data-toggle="modal" data-target="#exampleModal{{ cmd.0 }}" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
+                     </td>
+                     <td>
+                        <form method="post" action="deletecom/{{ cmd.0 }}">
+                             <Button type="submit" onclick="return confirm('are you sure for delete')" class="btn btn-danger"><i class="bi bi-trash3"></i></Button>
+                        </form>
+                      </td>
+                      <td>
+                        <a href="facture/{{ cmd.0 }}" class="btn btn-info"><i class="bi bi-pencil"></i></a>
+
+                      
+                     </td>
+                 </tr>
+                 <!-- Modal -->
+<div class="modal fade" id="exampleModal{{ cmd.0 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+         <form action="updatecom/{{ cmd.0 }}" method="post">
+      <div class="modal-body">
+          <div class="form-group">
+              <label>Quantity</label>
+              <input type="text" name="quant" value="{{ cmd.2 }}" class="form-control" required>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+             {% endfor %}
+         </table>
+         </div>
+     </div>
+   </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+         <form action="addcom" method="post">
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Product list</label>
+                <select name="prod_id" class="form-control">
+                  {% for prd in prdts %}
+                    <option value="{{ prd.0 }}">{{ prd.1 }}</option>
+                  {%endfor%}
+                </select>
+              </div>
+
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="text" name="quant"  class="form-control" required>
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends('layouts/navbaradmin.html')%}
+{% block content %}
+
+     <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Emplois</h1>
+        <h1 class="h3 mb-0 text-gray-800">Evénement</h1>
+     </div>
+
+        <div class="row justify-content-left">
+       <div class="col-md-12">
+           <br />
+           <div class="card">
+               <div class="card-header bgsize-primary-4 white card-header">
+                   <h4 class="card-title">Liste des emplois</h4>
+               </div>
+               <div class="card-body">
+                   <div class="pull-right">
+
+                   </div>
+                   <div class=" card-content table-responsive">
+             <table class="table table-hover">
+               <tr>
+                  <thead>
+                   <th>#</th>
+                   <th>classe</th>
+                   <th>Image</th>
+                   </thead>
+               </tr>
+                  <tbody>
+                        {% if nbrno==0 %}
+                         <tr><td>no data set</td></tr>
+                         {% else %}
+                       {% for row in datas %}
+                           <tr>
+                              <td>{{ row.0 }}</td>
+                              <td>{{ row.1 }}</td>
+                              <td>{{ row.2 }}</td>
+
+                           </tr>
+
+
+                  {% endfor %}
+                {% endif %}
+                  </tbody>
+             </table>
+                   </div>
+               </div>
+           </div>
+       </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends('layouts/navbaradmin.html')%}
+{% block content %}
+ <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Document</h1>
+        <h1 class="h3 mb-0 text-gray-800">Admin/h1>
+    </div>
+ <div class="row justify-content-left">
+       <div class="col-md-12">
+           <br />
+           <div class="card">
+               <div class="card-header bgsize-primary-4 white card-header">
+                   <h4 class="card-title">Liste des documents</h4>
+               </div>
+                   <div class=" card-content table-responsive">
+                       <table  id="example" class="table table-striped table-bordered" style="width:100%">
+                           <tr>
+                               <td>#</td>
+                              <td>Nom</td>
+                              <td>Document</td>
+                          </tr>
+                           {% if nbrdoc==0 %}
+                               <tr>
+                                   <td colspan="10">Il n'y a pas des documents.</td>
+                               </tr>
+                           {% else %}
+                              {% for row in datas %}
+                                  <tr>
+                                    <td>{{ row.0 }}</td>
+                                      <td>{{ row.1 }}</td>
+                                  </tr>
+
+
+                              {%endfor  %}
+                            {% endif %}
+                       </table>
+                   </div>
+               </div>
+           </div>
+       </div>
+ </div>
+
+{% endblock %}
